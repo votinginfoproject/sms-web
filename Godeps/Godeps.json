@@ -1,0 +1,17 @@
+{
+	"ImportPath": "github.com/votinginfoproject/sms-web",
+	"GoVersion": "go1.3.1",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/joho/godotenv",
+			"Rev": "aab3ea4ba68f8fe7492604240b01190d9efc4db4"
+		},
+		{
+			"ImportPath": "github.com/stretchr/testify/assert",
+			"Rev": "653e88ba5548fbd2a8f01d1500cef279a44af0a3"
+		}
+	]
+}
