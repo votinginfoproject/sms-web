@@ -10,6 +10,10 @@
 			"Rev": "aab3ea4ba68f8fe7492604240b01190d9efc4db4"
 		},
 		{
+			"ImportPath": "github.com/julienschmidt/httprouter",
+			"Rev": "6db904312c78e5595a8d48c6b74fce77f407a33a"
+		},
+		{
 			"ImportPath": "github.com/stretchr/testify/assert",
 			"Rev": "653e88ba5548fbd2a8f01d1500cef279a44af0a3"
 		}
