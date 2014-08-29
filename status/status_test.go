@@ -34,7 +34,7 @@ func TestGetStatus(t *testing.T) {
 	body, _ := ioutil.ReadAll(res.Body)
 	assert.Equal(t, "OK\n", string(body))
 
-	assert.Equal(t, "text/html", res.Header["Content-Type"][0])
+	assert.Equal(t, "text/plain", res.Header["Content-Type"][0])
 
 	assert.Equal(t, "200 OK", res.Status)
 }
