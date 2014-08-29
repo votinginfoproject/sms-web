@@ -10,6 +10,6 @@ func Load() {
 	err := godotenv.Load()
 
 	if err != nil {
-		log.Panic("Error loading .env file")
+		log.Panic("[ERROR] error loading .env file")
 	}
 }

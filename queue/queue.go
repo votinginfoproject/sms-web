@@ -49,7 +49,7 @@ func (s *SQS) Enqueue(number string, message string) {
 	data, err := json.Marshal(Data{number, message})
 
 	if err != nil {
-		log.Panic(err)
+		log.Panic("[ERROR] error marshaling JSON : ", err)
 	}
 
 	_, err = s.q.SendMessage(string(data))
