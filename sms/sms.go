@@ -1,7 +1,6 @@
 package sms
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
@@ -16,12 +15,6 @@ func WireUp(eqs queue.ExternalQueueService) {
 }
 
 func Receive(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
-	err := req.ParseForm()
-	if err != nil {
-		log.Fatal("Failed to parse form data from twilio")
-		return
-	}
-
 	number := req.Form["From"][0]
 	message := req.Form["Body"][0]
 	q.Enqueue(number, message)

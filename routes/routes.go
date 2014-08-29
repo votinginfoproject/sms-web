@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -15,6 +16,10 @@ type Server struct {
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+
+	log.Print(fmt.Sprintf("[INFO] [REQUEST] : Method: %s - Path: %s - Host: %s, FormData: %s", r.Method, r.URL.RequestURI(), r.Host, r.Form))
+
 	s.handler.ServeHTTP(w, r)
 }
 
