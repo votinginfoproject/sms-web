@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/crowdmob/goamz/aws"
 	"github.com/crowdmob/goamz/sqs"
@@ -34,7 +35,9 @@ func (s *SQS) Connect() {
 	auth := aws.Auth{AccessKey: accessKey, SecretKey: secretKey}
 	sqs := sqs.New(auth, aws.USEast)
 
-	queue, err := sqs.GetQueue("vip-sms-development")
+	queueName := os.Getenv("QUEUE_PREFIX") + "-" + strings.ToLower(os.Getenv("ENVIRONMENT"))
+
+	queue, err := sqs.GetQueue(queueName)
 	if err != nil {
 		log.Panic(err)
 	}
