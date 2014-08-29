@@ -3,9 +3,9 @@ package env
 import "github.com/joho/godotenv"
 
 func Load() {
-	ok := godotenv.Load()
+	err := godotenv.Load()
 
-	if ok != nil {
+	if err != nil {
 		panic("Error loading .env file")
 	}
 }
