@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/votinginfoproject/sms-web/env"
@@ -12,5 +13,5 @@ func main() {
 	env.Load()
 
 	q := queue.New()
-	panic(http.ListenAndServe(":8080", routes.New(q)))
+	log.Panic(http.ListenAndServe(":8080", routes.New(q)))
 }

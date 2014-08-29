@@ -2,6 +2,7 @@ package queue
 
 import (
 	"encoding/json"
+	"log"
 	"os"
 
 	"github.com/crowdmob/goamz/aws"
@@ -35,7 +36,7 @@ func (s *SQS) Connect() {
 
 	queue, err := sqs.GetQueue("vip-sms-development")
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 
 	s.q = queue
@@ -45,7 +46,7 @@ func (s *SQS) Enqueue(number string, message string) {
 	data, err := json.Marshal(Data{number, message})
 
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 
 	s.q.SendMessage(string(data))
