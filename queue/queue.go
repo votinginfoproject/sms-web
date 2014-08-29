@@ -49,5 +49,8 @@ func (s *SQS) Enqueue(number string, message string) {
 		log.Panic(err)
 	}
 
-	s.q.SendMessage(string(data))
+	_, err = s.q.SendMessage(string(data))
+	if err != nil {
+		log.Print("[ERROR] failed to enqueue data : ", err)
+	}
 }
