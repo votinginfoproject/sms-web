@@ -22,5 +22,6 @@ func main() {
 	runtime.GOMAXPROCS(procs)
 
 	q := queue.New()
+	log.Print("[INFO] starting server on port 8080")
 	log.Panic(http.ListenAndServe(":8080", routes.New(q)))
 }
