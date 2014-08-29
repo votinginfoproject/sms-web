@@ -39,7 +39,7 @@ func teardown() {
 	server.Close()
 }
 
-func TestReceive(t *testing.T) {
+func TestReceiveSuccess(t *testing.T) {
 	fq := new(FakeQueue)
 	fq.On("Connect").Return()
 	fq.On("Enqueue", "+15555555555", "this is a test").Return()
@@ -54,6 +54,23 @@ func TestReceive(t *testing.T) {
 	res, _ := http.PostForm(server.URL+"/", data)
 
 	assert.Equal(t, "200 OK", res.Status)
+
+	fq.Mock.AssertExpectations(t)
+}
+
+func TestReceiveError(t *testing.T) {
+	fq := new(FakeQueue)
+	fq.On("Connect").Return()
+
+	setup(fq)
+	defer teardown()
+
+	data := url.Values{}
+	data.Set("Body", "this is a test")
+
+	res, _ := http.PostForm(server.URL+"/", data)
+
+	assert.Equal(t, "500 Internal Server Error", res.Status)
 
 	fq.Mock.AssertExpectations(t)
 }

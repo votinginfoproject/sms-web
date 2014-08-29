@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
@@ -19,6 +20,12 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func New(q queue.ExternalQueueService) *Server {
 	routes := httprouter.New()
+
+	routes.PanicHandler = func(res http.ResponseWriter, req *http.Request, _ interface{}) {
+		res.WriteHeader(http.StatusInternalServerError)
+		res.Header().Set("Content-Type", "text/plain")
+		log.Print("[ERROR] : ", req)
+	}
 
 	routes.GET("/status", status.Get)
 
