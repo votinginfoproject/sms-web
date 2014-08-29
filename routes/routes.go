@@ -36,7 +36,6 @@ func New(q queue.ExternalQueueService) *Server {
 
 	if q != nil {
 		sms.WireUp(q)
-		q.Connect()
 	}
 	routes.POST("/", sms.Receive)
 
