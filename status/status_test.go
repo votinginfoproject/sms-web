@@ -1,7 +1,6 @@
 package status_test
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -26,15 +25,11 @@ func teardown() {
 	server.Close()
 }
 
-func TestGet(t *testing.T) {
+func TestGetStatus(t *testing.T) {
 	setup()
 	defer teardown()
 
-	res, err := http.Get(server.URL + "/status")
-
-	if err != nil {
-		fmt.Println(err)
-	}
+	res, _ := http.Get(server.URL + "/status")
 
 	body, _ := ioutil.ReadAll(res.Body)
 	assert.Equal(t, "OK\n", string(body))
