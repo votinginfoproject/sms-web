@@ -1,9 +1,6 @@
 {
 	"ImportPath": "github.com/votinginfoproject/sms-web",
 	"GoVersion": "go1.3.1",
-	"Packages": [
-		"./..."
-	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/crowdmob/goamz/aws",
@@ -22,6 +19,11 @@
 			"Rev": "6db904312c78e5595a8d48c6b74fce77f407a33a"
 		},
 		{
+			"ImportPath": "github.com/segmentio/go-loggly",
+			"Comment": "v0.4.3",
+			"Rev": "7c4f9c95707ab46d8ab21393f8cb41857a5e333e"
+		},
+		{
 			"ImportPath": "github.com/stretchr/objx",
 			"Rev": "cbeaeb16a013161a98496fad62933b1d21786672"
 		},
@@ -32,6 +34,11 @@
 		{
 			"ImportPath": "github.com/stretchr/testify/mock",
 			"Rev": "653e88ba5548fbd2a8f01d1500cef279a44af0a3"
+		},
+		{
+			"ImportPath": "github.com/visionmedia/go-debug",
+			"Comment": "v1.1.1",
+			"Rev": "9b5dbbcea5b7374071f9f2a6786c3dbb4c1ef177"
 		}
 	]
 }
