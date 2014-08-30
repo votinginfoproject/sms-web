@@ -8,6 +8,7 @@ import (
 	"strconv"
 
 	"github.com/votinginfoproject/sms-web/env"
+	"github.com/votinginfoproject/sms-web/logger"
 	"github.com/votinginfoproject/sms-web/queue"
 	"github.com/votinginfoproject/sms-web/routes"
 )
@@ -20,6 +21,8 @@ func main() {
 		log.Fatal("[ERROR] you must specify procs in the .env file")
 	}
 	runtime.GOMAXPROCS(procs)
+
+	log.SetOutput(logger.New())
 
 	q := queue.New()
 	log.Print("[INFO] starting server on port 8080")
