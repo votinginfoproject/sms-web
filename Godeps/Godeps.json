@@ -1,6 +1,9 @@
 {
 	"ImportPath": "github.com/votinginfoproject/sms-web",
 	"GoVersion": "go1.3.1",
+	"Packages": [
+		"./..."
+	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/crowdmob/goamz/aws",
@@ -39,6 +42,19 @@
 			"ImportPath": "github.com/visionmedia/go-debug",
 			"Comment": "v1.1.1",
 			"Rev": "9b5dbbcea5b7374071f9f2a6786c3dbb4c1ef177"
+		},
+		{
+			"ImportPath": "github.com/yvasiyarov/go-metrics",
+			"Rev": "6b08babe701f8de2481c8bc4c2c638d9c5867e41"
+		},
+		{
+			"ImportPath": "github.com/yvasiyarov/gorelic",
+			"Comment": "v0.0.6-6-ged461c0",
+			"Rev": "ed461c0552ffe5e4bee53eb23c0edacc13c82555"
+		},
+		{
+			"ImportPath": "github.com/yvasiyarov/newrelic_platform_go",
+			"Rev": "2d5b3d6e6db42e361ca5a5b6376a1368f7067236"
 		}
 	]
 }
