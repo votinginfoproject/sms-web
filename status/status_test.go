@@ -16,7 +16,7 @@ var (
 )
 
 func setup() {
-	routes := routes.New(nil)
+	routes := routes.New(nil, nil)
 	server = httptest.NewServer(routes)
 	log.SetOutput(ioutil.Discard)
 }

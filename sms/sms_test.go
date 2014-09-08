@@ -30,7 +30,7 @@ var (
 )
 
 func setup(fq *FakeQueue) {
-	routes := routes.New(fq)
+	routes := routes.New(fq, nil)
 	server = httptest.NewServer(routes)
 	log.SetOutput(ioutil.Discard)
 }

@@ -9,6 +9,7 @@ import (
 	"github.com/votinginfoproject/sms-web/queue"
 	"github.com/votinginfoproject/sms-web/sms"
 	"github.com/votinginfoproject/sms-web/status"
+	"github.com/yvasiyarov/gorelic"
 )
 
 type Server struct {
@@ -23,7 +24,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	s.handler.ServeHTTP(w, r)
 }
 
-func New(q queue.ExternalQueueService) *Server {
+func New(q queue.ExternalQueueService, agent *gorelic.Agent) *Server {
 	routes := httprouter.New()
 
 	routes.PanicHandler = func(res http.ResponseWriter, req *http.Request, _ interface{}) {
@@ -39,5 +40,9 @@ func New(q queue.ExternalQueueService) *Server {
 	}
 	routes.POST("/", sms.Receive)
 
-	return &Server{routes}
+	if agent != nil {
+		return &Server{agent.WrapHTTPHandler(routes)}
+	} else {
+		return &Server{routes}
+	}
 }
