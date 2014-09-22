@@ -33,6 +33,7 @@ task :deploy, [:environment] => :aws_auth do |_, args|
     puts 'restarting service on instances...'
     ec2 = AWS::EC2.new
     ec2.instances.with_tag('Name', tag).each do |instance|
+      next if instance.status == :terminated
       Helper.run_command('ubuntu', instance.public_ip_address, 'sudo service sms-web stop')
       Helper.run_command('ubuntu', instance.public_ip_address, 'sudo service sms-web start')
     end
