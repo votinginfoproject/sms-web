@@ -1,7 +1,9 @@
 package sms
 
 import (
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/julienschmidt/httprouter"
 	"github.com/votinginfoproject/sms-web/queue"
@@ -15,7 +17,14 @@ func WireUp(eqs queue.ExternalQueueService) {
 }
 
 func Receive(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
-	number := req.Form["From"][0]
-	message := req.Form["Body"][0]
-	q.Enqueue(number, message)
+	sid := req.Form["AccountSid"]
+
+	if len(sid) == 0 || sid[0] != os.Getenv("TWILIO_SID") {
+		res.WriteHeader(http.StatusForbidden)
+		log.Print("[FORBIDDEN] : ", req)
+	} else {
+		number := req.Form["From"][0]
+		message := req.Form["Body"][0]
+		q.Enqueue(number, message)
+	}
 }

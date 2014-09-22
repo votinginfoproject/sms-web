@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -30,12 +31,14 @@ var (
 )
 
 func setup(fq *FakeQueue) {
+	os.Setenv("TWILIO_SID", "test")
 	routes := routes.New(fq, nil)
 	server = httptest.NewServer(routes)
 	log.SetOutput(ioutil.Discard)
 }
 
 func teardown() {
+	os.Setenv("TWILIO_SID", "")
 	server.Close()
 }
 
@@ -50,6 +53,7 @@ func TestReceiveSuccess(t *testing.T) {
 	data := url.Values{}
 	data.Set("Body", "this is a test")
 	data.Set("From", "+15555555555")
+	data.Set("AccountSid", "test")
 
 	res, _ := http.PostForm(server.URL+"/", data)
 
@@ -67,10 +71,49 @@ func TestReceiveError(t *testing.T) {
 
 	data := url.Values{}
 	data.Set("Body", "this is a test")
+	data.Set("AccountSid", "test")
 
 	res, _ := http.PostForm(server.URL+"/", data)
 
 	assert.Equal(t, "500 Internal Server Error", res.Status)
+
+	fq.Mock.AssertExpectations(t)
+}
+
+func TestReceiveForbiddenNoEnv(t *testing.T) {
+	fq := new(FakeQueue)
+	fq.On("Connect").Return()
+
+	setup(fq)
+	defer teardown()
+
+	os.Setenv("TWILIO_SID", "")
+	data := url.Values{}
+	data.Set("Body", "this is a test")
+	data.Set("From", "+15555555555")
+	data.Set("AccountSid", "test")
+
+	res, _ := http.PostForm(server.URL+"/", data)
+
+	assert.Equal(t, "403 Forbidden", res.Status)
+
+	fq.Mock.AssertExpectations(t)
+}
+
+func TestReceiveForbiddenNoFormData(t *testing.T) {
+	fq := new(FakeQueue)
+	fq.On("Connect").Return()
+
+	setup(fq)
+	defer teardown()
+
+	data := url.Values{}
+	data.Set("Body", "this is a test")
+	data.Set("From", "+15555555555")
+
+	res, _ := http.PostForm(server.URL+"/", data)
+
+	assert.Equal(t, "403 Forbidden", res.Status)
 
 	fq.Mock.AssertExpectations(t)
 }
