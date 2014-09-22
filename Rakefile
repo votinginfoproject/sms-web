@@ -60,7 +60,7 @@ task :test, [:environment, :number, :message] => :aws_auth do |_, args|
           elb.load_balancers['vip-sms-app-lb1'].dns_name
         when 'staging'
           ec2 = AWS::EC2.new
-          ec2.instances.with_tag('Name', 'vip-sms-app-staging-web').collect.first.dns_name
+          ec2.instances.with_tag('Name', 'vip-sms-app-staging-web').collect.select { |i| i.status == :running }.first.dns_name
         end
 
   uri = URI.parse("http://#{dns}")
