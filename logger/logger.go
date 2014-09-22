@@ -21,11 +21,10 @@ func New() *ExternalLoggerService {
 
 func (els *ExternalLoggerService) Write(p []byte) (n int, err error) {
 	message := string(p)
+	fmt.Print(message)
 
-	els.logger.Send(loggly.Message{"message": message[:len(message)-1]})
-
-	if os.Getenv("ENVIRONMENT") == "development" {
-		fmt.Print(message)
+	if os.Getenv("ENVIRONMENT") != "development" {
+		els.logger.Send(loggly.Message{"message": message[:len(message)-1]})
 	}
 
 	return len(p), nil
