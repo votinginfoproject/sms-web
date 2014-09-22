@@ -29,7 +29,6 @@ func New(q queue.ExternalQueueService, agent *gorelic.Agent) *Server {
 
 	routes.PanicHandler = func(res http.ResponseWriter, req *http.Request, _ interface{}) {
 		res.WriteHeader(http.StatusInternalServerError)
-		res.Header().Set("Content-Type", "text/plain")
 		log.Print("[ERROR] : ", req)
 	}
 
