@@ -21,7 +21,7 @@ func Receive(res http.ResponseWriter, req *http.Request, params httprouter.Param
 
 	if len(sid) == 0 || sid[0] != os.Getenv("TWILIO_SID") {
 		res.WriteHeader(http.StatusForbidden)
-		log.Print("[FORBIDDEN] : ", req)
+		log.Printf("[FORBIDDEN] Method: %s - Path: %s - Host: %s, FormData: %s", req.Method, req.URL.RequestURI(), req.Host, req.Form)
 	} else {
 		number := req.Form["From"][0]
 		message := req.Form["Body"][0]
