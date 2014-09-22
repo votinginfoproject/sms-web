@@ -1,5 +1,7 @@
 require 'aws-sdk'
 require 'dotenv/tasks'
+require 'net/http'
+require 'uri'
 require_relative 'lib/helper'
 
 desc 'Build and deploy sms-web'
@@ -35,6 +37,41 @@ task :deploy, [:environment] => :aws_auth do |_, args|
       Helper.run_command('ubuntu', instance.public_ip_address, 'sudo service sms-web start')
     end
   end
+end
+
+desc 'Send test request'
+task :test, [:environment, :number, :message] => :aws_auth do |_, args|
+  number = args.number or
+    fail "You must specify a phone number: `rake test[ENVIRONMENT, NUMBER, 'MESSAGE']`"
+
+  number =~ (/\+\d{11}$/) or
+    fail "Phone number must be in the format '+15555551234' `rake test[ENVIRONMENT, NUMBER, 'MESSAGE']`"
+
+  environment = args.environment or
+    fail "You must specify an environment type (staging, or production): `rake test[ENVIRONMENT, NUMBER, 'MESSAGE']`"
+
+  message = args.message or
+    fail "You must specify a message: `rake test[ENVIRONMENT, NUMBER, 'MESSAGE']`"
+
+  dns = case environment
+        when 'production'
+          elb = AWS::ELB.new
+          elb.load_balancers['vip-sms-app-lb1'].dns_name
+        when 'staging'
+          ec2 = AWS::EC2.new
+          ec2.instances.with_tag('Name', 'vip-sms-app-staging-web').collect.first.dns_name
+        end
+
+  uri = URI.parse("http://#{dns}")
+
+  data = {
+    'From' => number,
+    'Body' => message,
+    'AccountSid' => ENV['TWILIO_SID']
+  }
+
+  response = Net::HTTP.post_form(uri, data)
+  puts "Response code: #{response.code}"
 end
 
 desc 'AWS auth config'
