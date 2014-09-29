@@ -6,6 +6,7 @@ that data in an AWS SQS queue.
 
 ## Requirements
 - Golang 1.3
+- Ruby 2.1.2
 - [Godep](https://github.com/tools/godep)
 - A .env file with the following items...
 
