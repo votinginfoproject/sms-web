@@ -20,3 +20,21 @@ LOGGLY_TOKEN=
 NEWRELIC_TOKEN=
 TWILIO_SID=
 ~~~~
+
+## Tasks
+### Deploy
+~~~~
+rake deploy\[environment\]
+~~~~
+
+- Build the binary
+- Upload the binary to S3
+- Upload all but the first THREE lines of the .env file to S3
+- Restart the sms-web process on all instances
+
+### Test
+~~~~
+rake test\[environment,number,message\]
+~~~~
+
+- Send a test SMS from the specified number
