@@ -23,7 +23,12 @@ NEWRELIC_TOKEN=
 TWILIO_SID=
 ~~~~
 
-## Tasks
+## Commands
+### Run Tests
+~~~~
+godep go test ./...
+~~~~
+
 ### Deploy
 ~~~~
 rake deploy\[environment\]
@@ -34,7 +39,7 @@ rake deploy\[environment\]
 - Upload all but the first THREE lines of the .env file to S3
 - Restart the sms-web process on all instances
 
-### Test
+### Send Test Message
 ~~~~
 rake test\[environment,number,message\]
 ~~~~
