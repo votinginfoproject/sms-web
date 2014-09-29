@@ -9,6 +9,8 @@ that data in an AWS SQS queue.
 - Ruby 2.1.2
 - [Godep](https://github.com/tools/godep)
 - A .env file with the following items...
+    - The first three items in the example .env file below (AWS credentials and
+      environment) MUST be in that order at the top of the file.
 
 ~~~~
 ACCESS_KEY_ID=
