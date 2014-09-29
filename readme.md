@@ -23,6 +23,12 @@ NEWRELIC_TOKEN=
 TWILIO_SID=
 ~~~~
 
+## Development System Setup
+To set your system up to develop this application...
+
+1. Make sure you have everything from the requirements section
+2. Run `bundle`
+
 ## Commands
 ### Run Tests
 ~~~~
