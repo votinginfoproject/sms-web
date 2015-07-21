@@ -5,6 +5,11 @@ Receives SMSs from Twilio, pulls out the relevant data, and enqueues
 that data in an AWS SQS queue.
 
 ## Requirements
+
+- [Docker][docker]
+
+**OR**
+
 - Golang 1.3
 - Ruby 2.1.2
 - [Godep](https://github.com/tools/godep)
@@ -28,6 +33,24 @@ To set your system up to develop this application...
 
 1. Make sure you have everything from the requirements section
 2. Run `bundle`
+
+## Docker Development System Setup
+
+It is potentially easier to develop with [Docker][docker].
+
+To compile and run the project, the typical docker `build` and `run`
+commands will work. When running, you will need to have the
+environment variables above set, because the docker version does not
+use the .env file.
+
+With the environment variables set, the commands are:
+
+```
+$ docker build -t sms-web .
+$ docker run -p 8080:8080 sms-web
+```
+
+[docker]: https://www.docker.com/
 
 ## Commands
 ### Run Tests
