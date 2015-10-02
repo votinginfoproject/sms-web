@@ -59,18 +59,8 @@ godep go test ./...
 ~~~~
 
 ### Deploy
-~~~~
-rake deploy\[environment\]
-~~~~
 
-- Build the binary
-- Upload the binary to S3
-- Upload all but the first THREE lines of the .env file to S3
-- Restart the sms-web process on all instances
+See the [sms-compose][sms-compose] repository for deployment
+instructions.
 
-### Send Test Message
-~~~~
-rake test\[environment,number,message\]
-~~~~
-
-- Send a test SMS from the specified number
+[sms-compose]: https://github.com/votinginfoproject/sms-compose
