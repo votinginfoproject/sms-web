@@ -11,7 +11,6 @@ that data in an AWS SQS queue.
 **OR**
 
 - Golang 1.3
-- Ruby 2.1.2
 - [Godep](https://github.com/tools/godep)
 - A .env file with the following items...
     - The first three items in the example .env file below (AWS credentials and
