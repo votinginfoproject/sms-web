@@ -29,7 +29,6 @@ ExecStartPre=/bin/bash -c 'echo ENVIRONMENT="$(curl -s http://${COREOS_PRIVATE_I
 ExecStartPre=/bin/bash -c 'echo TWILIO_SID="$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/sms/twilio/sid?raw)" >> /tmp/${CONTAINER}--env'
 ExecStartPre=/bin/bash -c 'echo PROCS="$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/sms/procs?raw)" >> /tmp/${CONTAINER}--env'
 ExecStartPre=/bin/bash -c 'echo ROUTINES="$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/sms/routines?raw)" >> /tmp/${CONTAINER}--env'
-ExecStartPre=/bin/bash -c 'echo LOGGLY_TOKEN="$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/sms/loggly-token?raw)" >> /tmp/${CONTAINER}--env'
 ExecStartPre=/bin/bash -c 'echo NEWRELIC_TOKEN="$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/sms/newrelic-token?raw)" >> /tmp/${CONTAINER}--env'
 
 ExecStart=/bin/bash -c 'docker run --name ${CONTAINER} \
