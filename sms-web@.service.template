@@ -1,0 +1,43 @@
+[Unit]
+Description=sms-web
+After=docker.service
+Requires=docker.service
+After=consul@%i.service
+Wants=consul@%i.service
+After=rabbitmq@%i.service
+Requires=rabbitmq@%i.service
+
+[Service]
+EnvironmentFile=/etc/environment
+TimeoutStartSec=10m
+TimeoutStopSec=10m
+
+Restart=on-failure
+
+Environment=DOCKER_IMAGE=
+Environment=CONTAINER=sms-web
+Environment=HOME=/root
+
+ExecStartPre=-/usr/bin/docker kill ${CONTAINER}
+ExecStartPre=-/usr/bin/docker rm ${CONTAINER}
+ExecStartPre=/usr/bin/docker pull ${DOCKER_IMAGE}
+
+ExecStartPre=/bin/bash -c 'echo ACCESS_KEY_ID="$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/sms/aws/access-key-id?raw)" > /tmp/${CONTAINER}--env'
+ExecStartPre=/bin/bash -c 'echo SECRET_ACCESS_KEY="$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/sms/aws/secret-access-key?raw)" >> /tmp/${CONTAINER}--env'
+ExecStartPre=/bin/bash -c 'echo QUEUE_PREFIX="$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/sms/aws/queue-prefix?raw)" >> /tmp/${CONTAINER}--env'
+ExecStartPre=/bin/bash -c 'echo ENVIRONMENT="$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/sms/environment?raw)" >> /tmp/${CONTAINER}--env'
+ExecStartPre=/bin/bash -c 'echo TWILIO_SID="$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/sms/twilio/sid?raw)" >> /tmp/${CONTAINER}--env'
+ExecStartPre=/bin/bash -c 'echo PROCS="$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/sms/procs?raw)" >> /tmp/${CONTAINER}--env'
+ExecStartPre=/bin/bash -c 'echo ROUTINES="$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/sms/routines?raw)" >> /tmp/${CONTAINER}--env'
+ExecStartPre=/bin/bash -c 'echo NEWRELIC_TOKEN="$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/sms/newrelic-token?raw)" >> /tmp/${CONTAINER}--env'
+
+ExecStart=/bin/bash -c 'docker run --name ${CONTAINER} \
+  --env-file /tmp/${CONTAINER}--env \
+  -p "8080:8080" \
+  ${DOCKER_IMAGE}'
+
+ExecStop=/usr/bin/docker stop ${CONTAINER}
+ExecStop=/bin/bash -c 'rm /tmp/${CONTAINER}--env'
+
+[X-Fleet]
+MachineOf=consul@%i.service
