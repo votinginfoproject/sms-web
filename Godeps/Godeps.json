@@ -1,6 +1,7 @@
 {
 	"ImportPath": "github.com/votinginfoproject/sms-web",
-	"GoVersion": "go1.3.1",
+	"GoVersion": "go1.6",
+	"GodepVersion": "v80",
 	"Packages": [
 		"./..."
 	],
@@ -19,6 +20,7 @@
 		},
 		{
 			"ImportPath": "github.com/julienschmidt/httprouter",
+			"Comment": "v1-21-g6db9043",
 			"Rev": "6db904312c78e5595a8d48c6b74fce77f407a33a"
 		},
 		{
@@ -40,12 +42,11 @@
 		},
 		{
 			"ImportPath": "github.com/visionmedia/go-debug",
-			"Comment": "v1.1.1",
-			"Rev": "9b5dbbcea5b7374071f9f2a6786c3dbb4c1ef177"
+			"Rev": "bfacf9d8a444b50f5d7ae47727544e775486966f"
 		},
 		{
 			"ImportPath": "github.com/yvasiyarov/go-metrics",
-			"Rev": "6b08babe701f8de2481c8bc4c2c638d9c5867e41"
+			"Rev": "c25f46c4b94079672242ec48a545e7ca9ebe3aec"
 		},
 		{
 			"ImportPath": "github.com/yvasiyarov/gorelic",

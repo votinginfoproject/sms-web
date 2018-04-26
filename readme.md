@@ -10,7 +10,7 @@ that data in an AWS SQS queue.
 
 **OR**
 
-- Golang 1.3
+- Golang 1.10
 - [Godep](https://github.com/tools/godep)
 - A .env file with the following items...
     - The first three items in the example .env file below (AWS credentials and
