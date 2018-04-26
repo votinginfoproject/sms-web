@@ -26,5 +26,6 @@ func Receive(res http.ResponseWriter, req *http.Request, params httprouter.Param
 		number := req.Form["From"][0]
 		message := req.Form["Body"][0]
 		q.Enqueue(number, message)
+		res.Header().Set("Content-Type", "text/plain; charset=utf-8")
 	}
 }
