@@ -21,6 +21,8 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[INFO] [REQUEST] Method: %s - Path: %s - Host: %s - Remote: %s - FormData: %s", r.Method, r.URL.RequestURI(), r.Host, r.RemoteAddr, r.Form)
 
 	s.handler.ServeHTTP(w, r)
+
+	log.Printf("[INFO] [REQUEST COMPLETED] Method: %s - Path: %s - Host: %s - Remote: %s - FormData: %s", r.Method, r.URL.RequestURI(), r.Host, r.RemoteAddr, r.Form)
 }
 
 func New(q queue.ExternalQueueService, agent *gorelic.Agent) *Server {
