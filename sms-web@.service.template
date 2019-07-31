@@ -4,8 +4,6 @@ After=docker.service
 Requires=docker.service
 After=consul@%i.service
 Wants=consul@%i.service
-After=rabbitmq@%i.service
-Requires=rabbitmq@%i.service
 
 [Service]
 EnvironmentFile=/etc/environment
@@ -37,7 +35,7 @@ ExecStart=/bin/bash -c 'docker run --name ${CONTAINER} \
   ${DOCKER_IMAGE}'
 
 ExecStop=/usr/bin/docker stop ${CONTAINER}
-ExecStop=/bin/bash -c 'rm /tmp/${CONTAINER}--env'
+ExecStop=/bin/bash -c 'rm -f /tmp/${CONTAINER}--env'
 
 [X-Fleet]
 MachineOf=consul@%i.service
